@@ -1,0 +1,82 @@
+﻿@using WebApplication4.Models
+
+@model UserInfo
+
+@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport"  content="width=device-width"/>
+    <title>Index</title>
+    <style type="text/css">
+        body{
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        table{
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+        table th{
+            background-color: #F7F7F7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table th, table td{
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th colspan="3">
+                            Login
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>사용자ID</td>
+                        <td>@Html.TextBoxFor(m => m.UserName) </td>
+                        <td>@Html.ValidationMessageFor(m => m.UserName, "", new { @class="error" })</td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td>@Html.PasswordFor(m => m.UserPassword) </td>
+                        <td>@Html.ValidationMessageFor(m => m.UserPassword, "", new { @class="error" })</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Submit"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            }
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @if(ViewBag.Message != null)
+            {
+                <script type="text/javascript">
+                    $(function () {
+                        alert("@ViewBag.Message")
+                    });
+                </script>
+            }
+</body>
+</html>
