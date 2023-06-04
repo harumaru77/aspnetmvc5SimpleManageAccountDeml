@@ -7,28 +7,24 @@ namespace WebApplication4.Controllers
 {
     public class HomeController : Controller
     {
-        List<UserInfo> _userInfos;
+        AccountManager _accountManager;
 
         public HomeController()
         {
-            _userInfos = new List<UserInfo>()
-            {
-                new UserInfo(){ UserId = 1, UserName = "testuser01", UserPassword = "1234" },
-                new UserInfo(){ UserId = 1, UserName = "testuser02", UserPassword = "1234" },
-            };
+            _accountManager = new AccountManager();
         }
 
         [AllowAnonymous]
         public ActionResult Index()
         {
             // 요청한 사용자의 인증 여부를 확인한다.
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Profile");
 
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Customer")]
         public ActionResult Profile()
         {
             return View();
@@ -40,7 +36,7 @@ namespace WebApplication4.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Contact()
         {
             return View();
@@ -54,7 +50,7 @@ namespace WebApplication4.Controllers
             string message;
             UserInfo findUserInfo;
 
-            findUserInfo = _userInfos.Find(m => m.UserName == userInfo.UserName && m.UserPassword == userInfo.UserPassword);
+            findUserInfo = _accountManager.Login(userInfo.UserName, userInfo.UserPassword);
 
             if (findUserInfo == null)
             {
