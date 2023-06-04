@@ -97,3 +97,5 @@ public ActionResult Contact()
 </div>
 ```
 - 정보와 연락처 링크는 로그인한 사용자에게만 보여지만 연락처  로그인한 사용자의 ROle에 Admin 권한이 있어야만 보여진다.
+6. 참고
+- https://stackoverflow.com/questions/41940905/asp-net-mvc-how-to-create-a-custom-role-provider
